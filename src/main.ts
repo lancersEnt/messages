@@ -1,8 +1,14 @@
 import { NestFactory } from '@nestjs/core';
+import cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
+  app.enableCors({
+    origin: 'http://192.168.1.200:5173',
+    credentials: true,
+  });
+  app.use(cookieParser());
+  await app.listen(9669);
 }
 bootstrap();

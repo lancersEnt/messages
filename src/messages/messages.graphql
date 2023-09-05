@@ -1,0 +1,45 @@
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.3",
+        import: ["@key", "@shareable"])
+
+directive @external on OBJECT | FIELD_DEFINITION
+
+extend type User @key(fields: "id"){
+  id: ID!
+  messages: [Message]!
+}
+
+extend type Klad @key(fields: "id"){
+  id: ID!
+  messages: [Message]!
+}
+
+type Message @key(fields: "id"){
+  # Example field (placeholder)
+  id: ID!
+  content: String!
+  kladId: String!
+  authorId: String!
+  user: User
+  klad: Klad
+  createdAt: DateTime
+}
+
+input CreateMessageInput {
+  # Example field (placeholder)
+  content: String!
+  kladId: String!
+  authorId: String!
+}
+
+
+type Query {
+  messages: [Message]!
+  message(id: String!): Message
+  kladMessages(kladId:String): [Message]!
+}
+
+type Mutation {
+  createMessage(createMessageInput: CreateMessageInput!): Message!
+  deleteKladMessages(kladId:String): String!
+}

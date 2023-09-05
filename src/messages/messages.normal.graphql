@@ -1,0 +1,45 @@
+scalar DateTime
+
+type User{
+  id: ID!
+  messages: [Message!]
+}
+
+type Klad{
+  id: ID!
+  messages: [Message!]
+}
+type Message {
+  # Example field (placeholder)
+  id: ID!
+  content: String!
+  kladId: String!
+  authorId: String!
+  user: User
+  klad: Klad
+  createdAt: DateTime
+}
+
+input CreateMessageInput {
+  # Example field (placeholder)
+  content: String!
+  kladId: String!
+  authorId: String!
+}
+
+
+type Query {
+  messages: [Message]!
+  message(id: String!): Message
+  kladMessages(kladId:String): [Message]!
+}
+
+type Mutation {
+  createMessage(createMessageInput: CreateMessageInput!): Message!
+  deleteKladMessages(kladId:String): String!
+}
+
+
+type Subscription {
+  messageCreated(kladId:String): Message
+}
